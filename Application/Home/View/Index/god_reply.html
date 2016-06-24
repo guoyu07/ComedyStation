@@ -1,0 +1,214 @@
+<!-- 主体内容-开始 -->
+
+<div class="main clearfix">
+    <div class="main-left fl" id="j-main-list">
+        <div class="main-nav clearfix" id="j-main-nav">
+            <ul class="clearfix fl">
+                <li>全 部</li>
+            </ul>
+        </div>
+        <!-- 笑话列表-开始 -->
+        <volist name="user_joke" id="val">
+            <dl class="main-list">
+                <dt>
+                    <a href="/user/{$val.User.id}" target="_blank">
+                        <img src="{$val.User.avatar}" data="{$val.User.username}" class="avatar_img">
+                    </a>
+                <p class="user">
+                    <a href="/user/{$val.User.id}">{$val.User.username}</a>
+                </p>
+                <span class="title"><a target="_blank" href="/joke/{$val.id}.html">{$val.title}</a></span>
+                </dt>
+
+                <dd class="content <php>if($val['type'] == 2){echo 'j-funny';}</php>">
+                    <php>
+                        if($val['type'] == 4){
+                        echo '
+                        <embed src="'.$val['content'].'" quality="high" width="480" height="400" align="middle"
+                               allowScriptAccess="always" allowFullScreen="true" mode="transparent"
+                               type="application/x-shockwave-flash"></embed>
+                        ';
+                        }else{
+                            echo htmlspecialchars_decode($val['content']);
+                        }
+                    </php>
+                </dd>
+
+                <dd>
+                    <ul class="comment-list comment-list-joke-list godreply" data-id="{$val.god_reply_info.id}">
+                        <li class="comment-list-line"><span>神回复</span></li>
+                        <li class="noborder">
+                            <div class="comment-content">
+                                <a href="/user/{$val.god_reply_info.User.id}"><img class="avatar_img"
+                                        src="{$val.god_reply_info.User.avatar}" data="{$val.god_reply_info.User.username}"
+                                        alt="{$val.god_reply_info.User.username}"><i></i></a>
+                                <p class="comment-username"><a href="">{$val.god_reply_info.User.username}</a></p>
+                                <p>{$val.god_reply_info.content}</p>
+                            </div>
+                            <div class="comment-ding hide">
+                                <a href="javascript:void(0);" rel="nofollow"
+                                   class="comment-ding-icon comment-good-ding-icon">{$val.god_reply_info.good_num}</a>
+                                <a class="comment-good-reply" href="javascript:void(0);" rel="nofollow"
+                                   style="display: block;">回复</a>
+                            </div>
+                        </li>
+                    </ul>
+                </dd>
+
+                <dd class="operation clearfix">
+                    <div class="operation-btn">
+                        <a href="javascript:void(0);" data-id="{$val.id}" class="ding <if condition=" ($val.record neq
+                           NULL) AND ($val['record']['type'] eq 'good')">ding-hover</if>" title="顶">
+                        <div class="dingcai">
+                            <span></span>
+                            <i>{$val.good_num}</i>
+                        </div>
+                        </a>
+                        <div class="operation-line"></div>
+                    </div>
+                    <div class="operation-btn">
+                        <a href="javascript:void(0);" data-id="{$val.id}" class="cai <if condition=" ($val.record neq
+                           NULL) AND ($val['record']['type'] eq 'bad')">cai-hover</if>" title="踩">
+                        <div class="dingcai">
+                            <span></span>
+                            <i>{$val.bad_num}</i>
+                        </div>
+                        </a>
+                        <div class="operation-line"></div>
+                    </div>
+                    <div class="operation-btn">
+                        <a href="javascript:void(0);" data-id="{$val.id}" class="comment index-comment" title="评论">
+                            <div class="dingcai"><span></span><i>{$val.review_num}</i></div>
+                        </a>
+                        <div class="operation-line"></div>
+                    </div>
+                    <div class="share-box clearfix">
+                        <a href="javascript:void(0);" class="share" title="分享"></a>
+                        <ul class="share-menu clearfix">
+                            <li><a href="javascript:;" class="tr share-qzone" title="分享到QQ空间" data-title="{$val.title}"
+                                   data-pic="<if condition=" $val['image'] neq
+                                ''">{$setting.site_domain}{$val.image}</if>"
+                                data-url="{$setting.site_domain}/xiaohua/{$val.id}.html"></a></li>
+                            <li><a href="javascript:;" class="tr share-tqq" title="分享到腾讯微博" data-title="{$val.title}"
+                                   data-pic="<if condition=" $val['image'] neq
+                                ''">{$setting.site_domain}{$val.image}</if>"
+                                data-url="{$setting.site_domain}/xiaohua/{$val.id}.html"></a></li>
+                            <li><a href="javascript:;" class="tr share-tsina" title="分享到新浪微博" data-title="{$val.title}"
+                                   data-pic="<if condition=" $val['image'] neq
+                                ''">{$setting.site_domain}{$val.image}</if>"
+                                data-url="{$setting.site_domain}/xiaohua/{$val.id}.html"></a></li>
+                            <li><a href="javascript:;" class="tr share-sqq" title="分享到QQ好友" data-title="{$val.title}"
+                                   data-pic="<if condition=" $val['image'] neq
+                                ''">{$setting.site_domain}{$val.image}</if>"
+                                data-url="{$setting.site_domain}/xiaohua/{$val.id}.html"></a></li>
+                            <li><a href="javascript:;" class="tr share-copy" title="复制网址"
+                                   data-url="{$setting.site_domain}/xiaohua/{$val.id}.html"></a></li>
+                        </ul>
+                    </div>
+
+                    <if condition="($val.record eq NULL) OR ($val['record']['award'] eq 0)">
+                        <a class="reward" href="javascript:void(0)" data-award="{$val.award_num}"
+                           data-id="{$val.id}">打赏</a>
+                    </if>
+                    <if condition="($val.record neq NULL) AND ($val['record']['award'] gt 0)">
+                        <a class="rewarded" href="javascript:void(0)">已打赏</a>
+                    </if>
+
+                    <if condition="($val.is_package eq 1) AND ($val.package_user_id eq 0)">
+                        <a class="buy" href="javascript:void(0)" data-id="{$val.id}"
+                           data-fee="{$val.package_fee}">包养</a>
+                    </if>
+                    <if condition="($val.is_package eq 1) AND ($val.package_user_id gt 0)">
+                        <div class="kepted">
+                            <a href="/user/{$val['record']['package_info']['id']}">{$val['record']['package_info']['username']}</a>
+                            <span>包养了Ta</span>
+                        </div>
+                    </if>
+
+                </dd>
+
+                </dd>
+            </dl>
+        </volist>
+        <!-- 笑话列表-结束 -->
+
+        <img src="__PUBLIC__/Assets/index/images/loading.gif" style="width:0;height:0;display:none;">
+        <script>
+            function copy(c) {
+                var clipBoardContent = c;
+                if (copy2Clipboard(clipBoardContent) != false) {
+                    alert("复制成功，请粘贴到你的QQ空间、新浪微博、腾讯微博，分享给你的好友!");
+                }
+            }
+
+            function copy2Clipboard(txt) {
+                if (window.clipboardData) {
+                    window.clipboardData.clearData();
+                    window.clipboardData.setData("Text", txt);
+                } else {
+                    prompt("您用的浏览器非IE核心请用Ctrl+C复制内容", txt);
+                    return false;
+                }
+            }
+
+            seajs.use('share', function (share) {
+                $('.share-qzone').click(function () {
+                    var data = $(this).data();
+                    share.shareToQzone(data.title, data.url, data.pic);
+                });
+                $('.share-tqq').click(function () {
+                    var data = $(this).data();
+                    share.shareToTencent(data.title, data.url, data.pic);
+                });
+                $('.share-tsina').click(function () {
+                    var data = $(this).data();
+                    share.shareToSina(data.title, data.url, data.pic);
+                });
+                $('.share-sqq').click(function () {
+                    var data = $(this).data();
+                    share.shareToFriend(data.title, data.url, data.pic);
+                });
+
+                //复制笑话网址
+                $('.share-copy').click(function () {
+                    copy($(this).attr('data-url'));
+                    return false;
+                });
+            });
+        </script>
+        <div class="comment">
+            <div class="page">
+                {$page}
+            </div>
+        </div>
+        <div id="reward" class="joke-buy-box" style="display: none; top: 0; left: 0;">
+        </div>
+    </div>
+    <include file="right"/>
+</div>
+<script src="__PUBLIC__/Assets/js/pnglib.js"></script>
+<script src="__PUBLIC__/Assets/js/identicon.js"></script>
+<script src="__PUBLIC__/Assets/js/jquery.md5.js"></script>
+<script type="text/javascript">
+    seajs.use(['user'], function (user) {
+        $(window).load(function () {
+            user.jokeList(test);
+        });
+    });
+    $(function () {
+        var imgs = $('.avatar_img')
+        for (var i in imgs) {
+            var img=$(imgs[i])
+            if (img.attr('src') == '') {
+                var hash = $.md5(img.attr('data'));
+                var options = {
+                    background: [parseInt('0x' + hash) % 255, parseInt('0x' + hash) % 127, parseInt('0x' + hash) % 63, 255],
+                    margin: 0.2,
+                    size: 150
+                };
+                var data = new Identicon(hash, options).toString();
+                img.attr('src', 'data:image/png;base64,' + data)
+            }
+        }
+    })
+</script>

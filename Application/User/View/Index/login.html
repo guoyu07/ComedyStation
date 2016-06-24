@@ -1,0 +1,43 @@
+
+<div class="main clearfix register" id="iframe-login">
+    <div class="iframe-reg">
+        <dl class="login-left">
+            <dt>登陆爆笑驿站！</dt>
+            <dd>
+                <form id="login-form">
+                    <ul>
+                        <li>
+                            <input type="text" name="username" class="email" placeholder="邮箱">
+                            <span class="error"></span>
+                        </li>
+                        <li>
+                            <input type="password" name="password" class="pasw" placeholder="密码">
+                            <span class="error"></span>
+                        </li>
+                        <li class="user-action clearfix">
+                            <input type="checkbox" name="is_save" id="keep" value="30" checked=""> <label
+                                class="Remember-account" for="keep">下次自动登陆</label>
+                            <a class="fr" href="{:U('/user/index/forgetpassword')}">忘记密码？</a>
+                        </li>
+                        <li class="button"><input type="button" class="btn" value="登录"></li>
+                    </ul>
+                    <input type="hidden" value="{$Think.get.next}" id="next_url">
+                </form>
+            </dd>
+        </dl>
+        <div class="login-right">
+            <div class="or"><span>或</span></div>
+            <dl class="loginp">
+                <dt class="title">使用以下帐号直接登录</dt>
+                <dd class="qq"><a href="/account/qqlogin"><i class="login-qq tr"></i><span>QQ</span></a></dd>
+                <dd class="weibo"><a href="/account/wblogin"><i class="login-weibo tr"></i><span>新浪微博</span></a></dd>
+            </dl>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    seajs.use(['user'], function (user) {
+        user.login();
+    });
+</script>

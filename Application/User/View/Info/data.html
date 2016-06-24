@@ -1,0 +1,112 @@
+
+<!-- 主体内容-开始 -->
+<div class="main clearfix member">
+    <include file="banner" />
+    <div class="left">
+        <ul class="user-nav">
+            <li><a href="/user/info/index">我的信息</a></li>
+            <li><a href="/user/info/jokes">我的投稿</a></li>
+            <li><a href="/user/info/review">@评论</a></li>
+            <li><a href="/user/info/data" class="hover">个人资料</a></li>
+        </ul>
+        <!--个人资料-开始-->
+        <dl class="editInfo editInfoPhone">
+            <dt>基本信息</dt>
+            <dd>昵　称：<span>{$user.username}</span></dd>
+            <!-- <dd>邮　箱：<span>{$user.email}</span></dd> -->
+            <dd>
+                <form id="eidtEmail" novalidate="novalidate">
+                    <if condition="$user.email eq ''">
+                        Email：<span style="display: none;" ></span>
+                        <input type="text" value="" name="email" class="Input eidtEmail" style="display: inline-block;">
+                        <input type="button" class="eidtEmail-submit submit" value="保存" style="display: inline-block;">
+                        <input type="button" class="eidtEmail-btn btn" value="修改Email" style="display: none;">
+                        <else />
+                        Email：<span>{$user.email}</span>
+                        <input type="text" value="" name="email" class="Input eidtEmail" style="display: none;">
+                        <input type="button" class="eidtEmail-submit submit" value="保存" style="display: none;">
+                        <input type="button" class="eidtEmail-btn btn" value="修改Email" style="display: inline-block;;">
+                    </if>
+                    <label for="email" class="error" style="display: none;">Email不能为空</label>
+                </form>
+            </dd>
+            <dd>
+                <form id="eidtQQNum" novalidate="novalidate">
+                    <if condition="$user.qq eq ''">
+                        Q Q号：<span style="display: none;" ></span>
+                        <input type="text" value="" name="qq" class="Input QQNum" style="display: inline-block;">
+                        <input type="button" class="eidtQQNum-submit submit" value="保存" style="display: inline-block;">
+                        <input type="button" class="eidtQQNum-btn btn" value="修改QQ号" style="display: none;">
+                        <else />
+                        Q Q号：<span>{$user.qq}</span>
+                        <input type="text" value="" name="qq" class="Input QQNum" style="display: none;">
+                        <input type="button" class="eidtQQNum-submit submit" value="保存" style="display: none;">
+                        <input type="button" class="eidtQQNum-btn btn" value="修改QQ号" style="display: inline-block;;">
+                    </if>
+                    <label for="qq" class="error" style="display: none;">QQ号不能为空</label>
+                </form>
+            </dd>
+            <dd>
+                <form id="eidtMobilePhone" novalidate="novalidate">
+                    <if condition="$user.phone eq ''">
+                        手机号：<span style="display: none;"></span>
+                        <input type="text" value="" name="phone" class="Input mobilePhone" style="display: inline-block;">
+                        <input type="button" class="eidtMobilePhone-submit submit" value="保存" style="display: inline-block;">
+                        <input type="button" class="eidtMobilePhone-btn btn" value="修改手机号" style="display: none;">
+                        <else />
+                        手机号：<span>{$user.phone}</span>
+                        <input type="text" value="" name="phone" class="Input mobilePhone" style="display: none;">
+                        <input type="button" class="eidtMobilePhone-submit submit" value="保存" style="display: none;">
+                        <input type="button" class="eidtMobilePhone-btn btn" value="修改手机号" style="display: inline-block;">
+                    </if>
+                    <label for="phone" class="error" style="display: none;">手机号不能为空</label>
+                </form>
+            </dd>
+        </dl>
+
+        <if condition="$user.status eq 3">
+            <form id="createPassword">
+                <dl class="editInfo">
+                    <dt>创建密码</dt>
+                    <dd>
+                        <input type="password" name="password" class="password" placeholder="密码">
+                        <label for="new_password" class="error" style="display: none;"></label>
+                    </dd>
+                    <dd>
+                        <input type="password" name="confirm_password" class="passconf" placeholder="确认密码">
+                        <label for="new_passconf" class="error" style="display: none;"></label>
+                    </dd>
+                    <dd class="editInfo-btn"><input type="button" value="保存" class="editPassword-submit" ></dd>
+                </dl>
+            </form>
+            <else/>
+            <form id="editPassword">
+                <dl class="editInfo">
+                    <dt>修改密码</dt>
+                    <dd>
+                        <input type="password" name="old_password" class="oldPassword" placeholder="旧密码">
+                        <label for="old_password" class="error" style="display: none;"></label>
+                    </dd>
+                    <dd>
+                        <input type="password" name="password" class="password" placeholder="密码">
+                        <label for="new_password" class="error" style="display: none;"></label>
+                    </dd>
+                    <dd>
+                        <input type="password" name="confirm_password" class="passconf" placeholder="确认密码">
+                        <label for="new_passconf" class="error" style="display: none;"></label>
+                    </dd>
+                    <dd class="editInfo-btn"><input type="button" value="保存" class="editPassword-submit" ></dd>
+                </dl>
+            </form>
+        </if>
+        <!--个人资料-结束-->
+    </div>
+    <include file="right" />
+
+</div>
+<!-- 主体内容-结束 -->
+<script type="text/javascript">
+    seajs.use(['user'], function(user) {
+        user.setInfo();
+    });
+</script>

@@ -1,0 +1,78 @@
+
+<!-- 主体内容-开始 -->
+<div class="main clearfix member">
+    <include file="banner" />
+    <div class="left">
+        <ul class="user-nav">
+            <li><a href="/user/info/index" >我的信息</a></li>
+            <li><a href="/user/info/jokes" class="hover">我的投稿</a></li>
+            <li><a href="/user/info/review">@评论</a></li>
+            <li><a href="/user/info/data">个人资料</a></li>
+        </ul>
+        <!--我的投稿-开始-->
+        <ul class="content myinfo my-published" empty="暂时没有数据">
+            <li class="tab">
+                <a href="/user/info/jokes?type=all" <if condition="$type eq 'all'">class="hover"</if> >全部</a>
+                <a href="/user/info/jokes?type=2" <if condition="$type eq 2">class="hover"</if> >通过</a>
+                <a href="/user/info/jokes?type=1" <if condition="$type eq 1">class="hover"</if> >待审核</a>
+                <a href="/user/info/jokes?type=3" <if condition="$type eq 3">class="hover"</if> >未通过</a>
+            </li>
+            <if condition="$joke eq NULL">
+                <p style="font-size:20px;text-align:center;margin-top:16px;padding-bottom:20px;">小伙伴新来的，啥也木有。</p>
+            </if>
+            <volist name="joke" id="list">
+                <li>
+                    <dl>
+                        <dt>{$list.title}</dt>
+                        <dd class="content"><php>
+                            if($val['type'] == 4) {
+                            echo '
+                            <embed src="'.$val['content'].'" quality="high" width="480" height="400" align="middle"
+                                   allowScriptAccess="always" allowFullScreen="true" mode="transparent"
+                                   type="application/x-shockwave-flash"></embed>
+                            ';
+                            }else{
+                            echo htmlspecialchars_decode($val['content']);
+                            }
+                        </php></dd>
+                    </dl>
+                    <if condition="$list.status eq 1">
+                        <dd class="results">
+                            <i class="publish-no-audit"></i>
+                            <p>待审核&nbsp;&nbsp;	网友们正在认真审核您的投稿，请耐心等待。</p>
+                        </dd>
+                    </if>
+                    <if condition="$list.status eq 2">
+                        <dd class="results">
+                            <div class="results-left">
+                                <span>哇哦！你的笑话已经成功把囧婶笑晕了！</span>
+                                <a href="/joke/{$list.id}.html" target="_blank">{$list.title}</a>
+                            </div>
+                            <div class="results-right">
+                                <a href="" class="results-weibo" target="_blank">分享到微博</a>
+                                <a href="" class="results-qq" target="_blank">分享到QQ空间</a>
+                            </div>
+                        </dd>
+                        <dd class="data">
+                            <span class="m-j-ding">顶：{$list.good_num}</span><span class="m-j-cai">踩：{$list.bad_num}</span>
+                            <a href="" class="m-j-comment">评论：{$list.review_num}条</a>
+                        </dd>
+                    </if>
+                    <if condition="$list.status eq 3">
+                        <dd class="results">
+                            <i class="publish-malicious"></i>
+                            <p>未通过&nbsp;&nbsp; {$list.reason}</p>
+                        </dd>
+                    </if>
+                </li>
+            </volist>
+        </ul>
+        <!--我的投稿-结束-->
+        <div class="comment">
+            <div class="page">{$page}</div>
+        </div>
+    </div>
+    <include file="right" />
+</div>
+<!-- 主体内容-结束 -->
+

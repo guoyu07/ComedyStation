@@ -1,0 +1,42 @@
+<div class="user-banner">
+    <a href="javascript:void(0)" id="editImg">
+        <img src="{$user_info.avatar}" alt="{$user_info.username}" id="userAvatar">
+        <i></i>
+    </a>
+    <dl class="user-info">
+        <dt><span>{$user_info.username}</span>
+            <!--<span class="level_icon icon_lv{$user_info.level}"-->
+                  <!--title="{$user_info.level}"></span>-->
+        </dt>
+        <!--<dd class="level">-->
+        <!--<span class="bg"></span><span class="red" style="width:{$user_info['online_time']/$user_level['minute']*100}%;"></span><p></p>-->
+        <!--<i class="level_text text_lv{$user_info.level} level-left"></i>-->
+        <!--<i class="level_time">{$user_info.online_time}/{$user_level.minute}分钟</i>-->
+        <!--<i class="level_text text_lv{$user_info['level']+1} level-right"></i>-->
+        <!--</dd>-->
+        <dd class="mymabi">Ta的笑话：<span>{$count}</span></dd>
+        <dd class="obtain">
+            通过的笑话：<span class="in">{$user_info.audit_suc_num}</span>
+            通过率：<span class="out">{$user_info.audit_pro}%</span>
+        </dd>
+    </dl>
+</div>
+<script src="__PUBLIC__/Assets/js/pnglib.js"></script>
+<script src="__PUBLIC__/Assets/js/identicon.js"></script>
+<script src="__PUBLIC__/Assets/js/jquery.md5.js"></script>
+<script type="application/javascript">
+    $(function () {
+        var img=$('#userAvatar')
+        if(img.attr('src')=='')
+        {
+            var hash = $.md5('{$user_info.username}');
+            var options = {
+                background: [parseInt('0x'+hash)%255, parseInt('0x'+hash)%127, parseInt('0x'+hash)%63, 255],
+                margin: 0.2,
+                size: 150
+            };
+            var data = new Identicon(hash,options).toString();
+            img.attr('src','data:image/png;base64,' + data)
+        }
+    })
+</script>

@@ -1,0 +1,4 @@
+Runtime/Cache/*
+Runtime/Data/*
+Runtime/Logs/*
+Runtime/Temp/*

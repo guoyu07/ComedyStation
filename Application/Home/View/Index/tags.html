@@ -1,0 +1,28 @@
+<script type="text/javascript">
+    function checkSearch() {
+        if($('#key').val() == '') {
+            return false;
+        }
+        return true;
+    }
+</script>
+<dl class="tags-list">
+    <dt>
+        <a href="/tags" target="_blank"><h2>笑点</h2></a>
+        <a href="/tags" class="more" target="_blank">更多</a>
+    </dt>
+    <dd>
+        <volist name="tags" id="val" offset="0" length="20">
+            <a href="/tag/{$val.id}.html" target="_blank">{$val.name}</a>
+        </volist>
+    </dd>
+    <!--<dd>-->
+        <!--<div class="search">-->
+            <!--<form action="/joke/search" method="GET" onsubmit="return checkSearch();">-->
+                <!--<input type="text" value="" id="key" class="search-text" placeholder="你想找点啥 ?" title="你想找点啥 ?" name="key" style="color: rgb(204, 204, 204);">-->
+                <!--<input type="hidden" name="p" value="1" />-->
+                <!--<input type="submit" value="" class="search-submit">-->
+            <!--</form>-->
+        <!--</div>-->
+    <!--</dd>-->
+</dl>

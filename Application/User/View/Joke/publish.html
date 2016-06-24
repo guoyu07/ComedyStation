@@ -1,0 +1,240 @@
+<link rel="stylesheet" type="text/css" href="/Assets/js/uploadfile.min.css">
+<!-- 主体内容-开始 -->
+<div class="main clearfix publish">
+    <div class="left">
+        <if condition="$allow eq 1">
+            <form id="publish-joke">
+                <input type="hidden" name="image" value="" id="image"/>
+                <dl class="publish-title">
+                    <dt>笑话标题：</dt>
+                    <dd>
+                        <input type="text" name="title" value="" placeholder="起个逗逼点的标题" id="title"
+                               style="color: rgb(190, 190, 190);"/>
+                    </dd>
+                    <dd class="publish-message message-title"></dd>
+                </dl>
+                <dl class="publish-type">
+                    <dt>类别：</dt>
+                    <dd>
+                        <a href="javascript:void(0);" data-type="0" class="active">图文</a>
+                        <a href="javascript:void(0);" data-type="1">视频</a>
+                    </dd>
+                    <input type="hidden" id="is_video" name="is_video" value="0"/>
+                </dl>
+                <dl class="publish-content">
+                    <dt id="container" class="news">
+                        <span>输入内容：</span>
+                        <span id="fileuploader">插入图片</span>
+                        <span id="show_info" style="display:none">等待……</span>
+                    </dt>
+                    <dd class="news">
+                        <script id="content" name="content" type="text/plain"
+                                style="width:645px;height:240px;"></script>
+                    </dd>
+                    <dt id="url" style="display:none;">
+                        <span>优酷flash视频地址：</span>
+                        <input type="text" name="url" value="" placeholder="优酷flash视频地址" id="title"
+                               style="color: rgb(190, 190, 190);">
+                    </dt>
+                    <dd class="publish-message message-content" style="color:red;"></dd>
+                    <dd class="publish-btn">
+                        <div class="sell-joke">
+                            <input type="hidden" name="is_package" id="is_package" value="0"/>
+                            <input type="hidden" name="package_fee" id="package_fee" value="0"/>
+                            <!--<span class="sell-no" data-id="50"><i></i>我想被包养</span>-->
+                            <!--<span class="sell-btn" data-id="50">50金币</span>-->
+                            <!--<span class="sell-btn" data-id="100">100币</span>-->
+                            <!--<span class="sell-btn" data-id="200">200金币</span>-->
+                        </div>
+                        <input type="button" value="投稿" id="form_publish"/>
+                    </dd>
+                </dl>
+            </form>
+            <else/>
+            <p>今天的投稿次数已经用完了，请明天再投吧！</p>
+        </if>
+        <dl class="publish-reward-malicious">
+            <dt>奖励规则</dt>
+            <dd>
+                <p>1、好笑的投稿通过率高，而且更容易获得其它用户的金币打赏哦。<a href="/about/jiongbi.html" target="_blank">金币新玩法</a></p>
+                <p>2、投稿的数量有等级限制，详情请参考<a href="/about/shengji.html" target="_blank">等级规则</a>。</p>
+                <!--<p>3、你可以勾选“<i class="s-color-red">我想被包养</i>”，把你的投稿标一个买断价。如果有别的用户看中，他会出价买断，当然，后续这条投稿赚到的打赏就跟您没关系啦。</p>-->
+            </dd>
+        </dl>
+    </div>
+    <div class="right">
+        <div class="publish-rules">
+            <p>1、爆笑驿站是快乐分享网站，只要搞笑就可以发！</p>
+            <p>2、千万别投涉政治、色情、暴力、陪聊、广告等内容，小心封号哦。</p>
+            <p>3、我们是个搞笑类网站，非搞笑的投稿就算通过也会被删掉的哦。</p>
+            <p>4、分享你身边的趣事、糗事，鼓励原创，反对转载。</p>
+            <p>5、带水印图片审核是不会通过的，图片越清晰越好。</p>
+            <p>6、不要投重复的内容，会自动过滤掉的。</p>
+            <p>7、最多只允许上传5M的图片。</p>
+            <p class="more"><a href="/about/tougao.html" target="_blank">查看详细规则&gt;&gt;</a></p>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    seajs.use(['app', 'uploadfile', 'ueditor_config', 'ueditor'], function (App, uploadfile) {
+
+        //包养
+        var sell = $('.sell-no'),
+                sellVBtn = $('.sell-btn'),
+                is_package = $('#is_package'),
+                package_fee = $('#package_fee');
+        sell.click(function () {
+            var self = $(this);
+            if (self.hasClass('sell-yes')) {
+                self.removeClass('sell-yes');
+                is_package.val(0);
+                sellVBtn.removeClass('hover');
+            } else {
+                self.addClass('sell-yes');
+                is_package.val(1);
+                sellVBtn.eq(0).addClass('hover');
+                package_fee.val(sellVBtn.eq(0).data('id'));
+            }
+            ;
+        });
+        sellVBtn.click(function () {
+            var self = $(this),
+                    num = self.data('id');
+            if (sell.hasClass('sell-yes')) {
+                package_fee.val(num);
+                self.addClass('hover').siblings('.sell-btn').removeClass('hover');
+            }
+            ;
+        });
+        //类别
+        $('.publish-type a').click(function () {
+            var self = $(this),
+                    type = self.data('type');
+            self.addClass('active').siblings().removeClass('active');
+            $('#is_video').val(type);
+            $('.message-content').html('');
+            if (type) {
+                $('.news').hide();
+                $('#url').show();
+            } else {
+                $('.news').show();
+                $('#url').hide();
+            }
+        });
+
+
+        //投稿编辑器
+        var ue = UE.getEditor('content', {
+            toolbars: [],
+            initialFrameWidth: 640,
+            initialFrameHeight: 250,
+            autoHeightEnabled: true,
+            pasteplain: true,
+            initialContent: '',
+            autoClearinitialContent: true,
+            enterTag: 'br',
+            serverUrl: '',
+            imageScaleEnabled: false
+        });
+
+        //上传图片
+        $("#fileuploader").uploadFile({
+            url: '/user/joke/uploadfile/',
+            fileName: "Filedata",
+            dragDrop: false,
+            doneStr: '使用',
+            uploadStr: '插入图片',
+            returnType: 'json',
+            showStatusAfterSuccess: false,
+            allowedTypes: 'jpg,jpeg,gif,png,bmp',
+            acceptFiles: "image/",
+            multiple: false,
+            showDone: false,
+            showError: false,
+            onSubmit: function (files) {
+                if (UE.getEditor('content').getContent().indexOf('<img') > -1 || $('#fileuploader').show().html() == '上传中...') {
+                    $('#fileuploader').show().html('只能上传一张图片');
+                    return false;
+                } else {
+                    $('#fileuploader').show().html('上传中...');
+                }
+            },
+            onSuccess: function (files, data, xhr, pd) {
+                if (data.status == 0) {
+                    $('#fileuploader').show().html(data.info);
+                } else {
+                    var image = data.url.substr(1, data.url.length);
+                    var m_image = data.m_url.substr(1, data.m_url.length);
+                    $('#image').val(image);
+                    var imgHtml = '<img src="' + image + '" alt="" val="' + image + '"  />';
+                    if (parseInt(ue.getContentLength(true)) == 0) {
+                        ue.focus();
+                    }
+                    ue.execCommand('insertHtml', imgHtml);	//插入图片
+                    $('#fileuploader').show().html('上传完成');
+                }
+            }
+        });
+
+        //ajax
+        var form = $('#publish-joke'),
+                submit = $('#form_publish'),
+                title = $('.message-title'),
+                content = $('.message-content');
+
+        submit.click(function () {
+
+            var data = form.serializeObject();
+            if (!data.title) {
+                title.html('标题不能为空！');
+                return;
+            } else {
+                title.html('');
+            }
+            ;
+            if (parseInt(data.is_video)) {
+                if (!data.url) {
+                    content.html('视频URL不能为空！');
+                    return;
+                } else {
+                    if (data.url.indexOf('.youku.com') == -1) {
+                        content.html('视频地址必须是优酷的flash视频地址');
+                        return;
+                    } else {
+                        content.html('');
+                    }
+                    ;
+                }
+                ;
+            } else {
+                if (!data.content) {
+                    content.html('内容不能为空！');
+                    return;
+                } else {
+                    content.html('');
+                }
+                ;
+            }
+            ;
+            console.log(data);
+            App.request({
+                url: '/user/joke/publish',
+                data: data,
+                success: function (result) {
+                    var re = result;
+                    if (re.err) {
+                        App.alert(re.msg, function () {
+                            location.href = '';
+                        });
+                    } else {
+                        App.alert(re.msg);
+                    }
+                    ;
+                }
+            });
+        });
+
+    });
+</script>
+<!-- 主体内容-结束 -->
+

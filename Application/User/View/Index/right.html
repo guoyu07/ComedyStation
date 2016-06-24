@@ -1,0 +1,20 @@
+<div class="right">
+    <ul>
+        <li class="user-btn">
+            <a href="/user/joke/publish" class="publish" target="_blank"><i class="tr"></i><span>投稿</span></a>
+            <a  id="btn_sign" class="audit" ><i class="tr"></i><span>签到</span></a>
+        </li>
+    </ul>
+    <dl class="other-user clearfix" style="width:auto;padding:0 6px 30px;">
+        <dt>看看他们的笑话</dt>
+        <volist name="user_list" id="list">
+            <dd>
+                <a href="/user/{$list.id}" class="go-user-index" target="_blank">
+                    <img src="{$list.avatar}" alt="{$list.username}">
+                    <p>{$list.username}</p>
+                </a>
+                <a href="/user/{$list.id}" class="go-user-index-btn" target="_blank">去Ta首页</a>
+            </dd>
+        </volist>
+    </dl>
+</div>

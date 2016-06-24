@@ -1,0 +1,32 @@
+<div class="main clearfix">
+    <div class="main-left fl" id="j-main-list">
+        <div class="xiajiong tags-info">
+            <img src="{$tag_info.image}" alt="{$tag_info.name}">
+            <dl>
+                <dt><h1>{$tag_info.name}</h1></dt>
+                <dd class="tags-info-content"><p>{$tag_info.description}</p></dd>
+                <dd><span>相关笑话：<i>{$count}条</i></span></dd>
+                <dd>
+                    <div class="share-btn tags-share-btn">
+                        <span>分享到：</span>
+                        <a href="" target="_blank" class="share-qzone" data-cmd="qzone" rel="nofollow">QQ空间</a>
+                        <a href="" target="_blank" class="share-tqq" data-cmd="tqq" rel="nofollow" style="background-position: -205px 0px;">腾讯微博</a>
+                        <a href="" target="_blank" class="share-tsina" data-cmd="tsina" rel="nofollow">新浪微博</a>
+                        <a href="" target="_blank" class="share-sqq" data-cmd="sqq" rel="nofollow">QQ好友</a>
+                        <a href="javascript:void(0)" rel="nofollow" class="share-copy" title="复制网址" data-cmd="copy" data-url="{$setting.site_domain}/tags/{$id}_{$p}.html">复制网址</a>
+                    </div>
+                </dd>
+            </dl>
+        </div>
+        <include file="jokes" />
+        <div class="page">
+            {$page}
+        </div>
+    </div>
+    <div class="main-right fr">
+        <include file="user" />
+        <include file="tags" />
+        <include file="pics" />
+        <include file="texts" />
+    </div>
+</div>

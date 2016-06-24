@@ -1,0 +1,18 @@
+<div class="main-right fr">
+
+    <include file="user" />
+    <include file="tags" />
+    <include file="pics" />
+    <include file="texts" />
+</div>
+<script type="text/javascript">
+    //tab
+    var trial = $('#j-trial');
+    type = trial.find('.date-type');
+    type.mouseover(function(){
+        var self = $(this),
+                type = self.data('body');
+        self.addClass('hover').siblings('a').removeClass('hover');
+        trial.find('.' + type + '-body').show().siblings('ul').hide();
+    });
+</script>

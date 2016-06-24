@@ -1,0 +1,41 @@
+<ul class="user-operation">
+    <li class="user-show">
+        <if condition="$user eq NULL">
+            <!--未登录-->
+            <a href="javascript:void(0)" class="right-login-web">点击登录</a>
+            <span class="user-link"><em>或</em></span>
+            <a href="/account/qqlogin" target="_blank" class="right-login-qq"><i class="tr"></i><span>QQ登录</span></a>
+            <a href="/account/wblogin" target="_blank" class="right-login-weibo"><i class="tr"></i><span>微博登录</span></a>
+            <else/>
+            <!--已登录-->
+            <div class="right-top-avatar-a">
+                <a href="/user/{$user.id}" target="_blank">
+                    <img alt="{$user.username}" src="{$user.avatar}" class="avatar_img" data="{$user.username}">
+                </a>
+            </div>
+            <dl class="right-top-avatar">
+                <dt><a href="/user" target="_blank">{$user.username}</a><p></p>
+                </dt><dd class="noborder">金币：<em>{$user.money}</em></dd>
+                <!--<dd>等级：{$user.level}级</dd>-->
+                <dd class="noborder">投稿数：<em>{$user.send_num}</em></dd>
+                <!--<dd>审稿数：{$user.audit_num}</dd>-->
+            </dl>
+
+        </if>
+    </li>
+
+    <li class="user-btn">
+        <a href="/user/joke/publish" class="publish" target="_blank"><i class="tr"></i><span>投稿</span></a>
+        <a  id="btn_sign" class="audit" ><i class="tr"></i><span>签到</span></a>
+    </li>
+</ul>
+<script type="text/javascript">
+    seajs.use(['user'], function(user){
+        var login = $('.right-login-web');
+        login.click(function(){
+            user.loginDialog();
+        });
+
+    });
+
+</script>

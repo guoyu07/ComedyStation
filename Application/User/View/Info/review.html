@@ -1,0 +1,43 @@
+
+<!-- 主体内容-开始 -->
+<div class="main clearfix member">
+
+    <include file="banner" />
+
+    <div class="left">
+        <ul class="user-nav">
+            <li><a href="/user/info/index" >我的信息</a></li>
+            <li><a href="/user/info/jokes">我的投稿</a></li>
+            <li><a href="/user/info/review" class="hover">@评论</a></li>
+            <li><a href="/user/info/data" >个人资料</a></li>
+        </ul>
+
+        <!--@评论-开始-->
+        <ul class="content myinfo">
+            <if condition="$review eq NULL">
+                <p style="font-size:20px;text-align:center;margin-top:16px;padding-bottom:20px;">小伙伴新来的，啥也木有。</p>
+            </if>
+            <volist name="review" id="list">
+                <li>
+                    <div class="content-details">
+                        <p> {:date('Y-m-d',$list['created_time'])} 我在 <a href="/joke/{$list['Joke']['id']}.html" target="_blank">{$list['Joke']['title']}</a> 的笑话评论中@了 <a href="http://user.mahua.com/"></a> </p>
+                        <div class="reply-box" id="comment_1556965-1-at-1">
+                            <div class="reply-comment-content">
+                                <p>“<a href="/user/{$list['User']['id']}" title="{$list['User']['username']}" class="at">@{$list['User']['username']}</a>”</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </volist>
+        </ul>
+        <!--@评论-结束-->
+        <div class="comment">
+            <div class="page">{$page}</div>
+        </div>
+    </div>
+
+    <include file="right" />
+
+</div>
+<!-- 主体内容-结束 -->
+

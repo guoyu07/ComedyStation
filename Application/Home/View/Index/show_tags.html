@@ -1,0 +1,22 @@
+<!-- 主体内容-开始 -->
+<div class="main clearfix main-tags">
+    <ul>
+        <volist name="tags" id="val" key="k">
+            <if condition="$k lt 22">
+                <li class="img">
+                    <a href="/tag/{$val.id}.html">
+                        <img class="tr" src="{$val.image}">
+                        <span>{$val.name}</span>
+                    </a>
+                </li>
+                <else/>
+                <li>
+                    <a href="/tag/{$val.id}.html"
+                    <if condition="$val['active'] eq 1">class="active"</if>
+                    >{$val.name}</a>
+                </li>
+            </if>
+        </volist>
+    </ul>
+</div>
+<!-- 主体内容-结束 -->

@@ -1,0 +1,71 @@
+
+<div class="user-banner">
+    <a href="javascript:void(0)" id="editImg">
+        <img src="{$user.avatar}" alt="{$user.username}"  class="avatar_img" data="{$user.username}">
+        <p class="bg"></p>
+        <p>修改头像</p>
+        <i></i>
+    </a>
+    <dl class="user-info">
+        <dt><span>{$user.username}</span>
+            <!--<span class="level_icon icon_lv{$user.level}" title="{$user.level}"></span>-->
+        </dt>
+        <!--<dd class="level">-->
+            <!--<span class="bg"></span><span class="red" style="width:{$user['online_time']/$next_level['minute']*100}%;"></span><p><a href="/about/shengji.html" target="_blank">[等级规则]</a></p>-->
+            <!--<i class="level_text text_lv{$user.level} level-left"></i>-->
+            <!--<i class="level_time">{$user.online_time}/{$next_level.minute}分钟</i>-->
+            <!--<i class="level_text text_lv{$user['level']+1} level-right"></i>-->
+        <!--</dd>-->
+        <dd class="mymabi">我的金币：<span>{$user.money}</span><a href="/about/gold.html" target="_blank">[金币规则]</a></dd>
+        <dd class="obtain">
+            本月赚取金币：<span class="in">{$mtrace.income}</span>
+            本月花费金币：<span class="out">{$mtrace.cost}</span>
+        </dd>
+    </dl>
+</div>
+<script src="__PUBLIC__/Assets/js/pnglib.js"></script>
+<script src="__PUBLIC__/Assets/js/identicon.js"></script>
+<script src="__PUBLIC__/Assets/js/jquery.md5.js"></script>
+
+<script type="text/javascript">
+    seajs.use(['user'], function(user) {
+        user.setPortrait();
+    });
+    function copy()
+    {
+        var url = $("#select_url");
+        url.select();
+        document.execCommand("Copy");
+        alert("已复制!");
+    }
+    $(function () {
+        var img=$('#userAvatar')
+        if(img.attr('src')=='')
+        {
+            var hash = $.md5('{$user.username}');
+            var options = {
+                background: [parseInt('0x'+hash)%255, parseInt('0x'+hash)%127, parseInt('0x'+hash)%63, 255],
+                margin: 0.2,
+                size: 150
+            };
+            var data = new Identicon(hash,options).toString();
+            img.attr('src','data:image/png;base64,' + data)
+        }
+    })
+    $(function () {
+        var imgs = $('.avatar_img')
+        for (var i in imgs) {
+            var img=$(imgs[i])
+            if (img.attr('src') == '') {
+                var hash = $.md5(img.attr('data'));
+                var options = {
+                    background: [parseInt('0x' + hash) % 255, parseInt('0x' + hash) % 127, parseInt('0x' + hash) % 63, 255],
+                    margin: 0.2,
+                    size: 150
+                };
+                var data = new Identicon(hash, options).toString();
+                img.attr('src', 'data:image/png;base64,' + data)
+            }
+        }
+    })
+</script>

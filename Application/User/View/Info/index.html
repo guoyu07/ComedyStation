@@ -1,0 +1,52 @@
+<!-- 主体内容-开始 -->
+<div class="main clearfix member">
+
+    <include file="banner"/>
+
+    <div class="left">
+        <ul class="user-nav">
+            <li><a href="/user/info/index" class="hover">我的信息</a></li>
+            <li><a href="/user/info/jokes">我的投稿</a></li>
+            <li><a href="/user/info/review">@评论</a></li>
+            <li><a href="/user/info/data">个人资料</a></li>
+        </ul>
+
+        <!--我的信息-开始-->
+        <ul class="content myinfo">
+            <li class="tab">
+                <a href="/user/info/index?type=all"
+                <if condition="$type eq 'all'">class="hover"</if>
+                >全部</a>
+                <a href="/user/info/index?type=week"
+                <if condition="$type eq 'week'">class="hover"</if>
+                >7天内</a>
+                <a href="/user/info/index?type=month"
+                <if condition="$type eq 'month'">class="hover"</if>
+                >一月内</a>
+                <a href="/user/info/index?type=income"
+                <if condition="$type eq 'income'">class="hover"</if>
+                >收入</a>
+                <a href="/user/info/index?type=cost"
+                <if condition="$type eq 'cost'">class="hover"</if>
+                >花销</a>
+            </li>
+            <if condition="$trace eq NULL">
+                <p style="font-size:20px;text-align:center;margin-top:16px;padding-bottom:20px;">小伙伴新来的，啥也木有。</p>
+            </if>
+            <volist name="trace" id="list">
+                <li>
+                    <div class="content-details">{$list.content}</div>
+                </li>
+            </volist>
+        </ul>
+        <!--我的信息-结束-->
+        <div class="comment">
+            <div class="page">{$page}</div>
+        </div>
+
+    </div>
+
+    <include file="right"/>
+
+</div>
+

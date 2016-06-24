@@ -1,0 +1,36 @@
+<!-- 主体内容-开始 -->
+<div class="main clearfix">
+    <div class="main-left fl" id="j-main-list">
+        <div class="main-nav clearfix" id="j-main-nav">
+            <ul class="clearfix fl">
+                <li><a <if condition="$type===''"> class="action"</if> href="/">全 部</a></li>
+                <li><a href="/hot"<if condition="$type==='hour'"> class="action"</if>>8小时热门</a></li>
+                <li><a href="/hot/week" <if condition="$type==='week'"> class="action"</if>>7天热门</a></li>
+                <li><a href="/hot/month" <if condition="$type==='month'"> class="action"</if>>30天热门</a></li>
+            </ul>
+            <p class="notice"><a href="/about/gold.html"><b>公告：</b>金币规则</a></p>
+        </div>
+        <div class="side-nav" id="j-side-nav">
+            <ul class="clearfix">
+                <li class="cur" ><a href="/">首页</a></li>
+                <li><a href="/text">段子</a></li>
+                <li><a href="/pic">趣图</a></li>
+                <li><a href="/gif">动图</a></li>
+                <li><a href="/video">视频</a></li>
+            </ul>
+        </div>
+        <include file="jokes"/>
+        <div class="comment">
+            <div class="page">
+                {$page}
+            </div>
+        </div>
+    </div>
+    <include file="right"/>
+</div>
+<script type="text/javascript">
+    seajs.use(['user'], function (user) {
+        user.returnTop();
+        user.sideNav();
+    });
+</script>
